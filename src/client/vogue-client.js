@@ -1,18 +1,18 @@
 // Vogue - Client
 // Copyright (c) 2011 Andrew Davey (andrew@equin.co.uk)
 //
-// Note that all occurances of {port} in this script will be replaced with the port of the 
+// Note that all occurances of {port} in this script will be replaced with the port of the
 // HTTP server hosted by Node.
 
 (function() {
 
 loadScripts({
   jQuery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js',
-  io: 'http://localhost:{port}/socket.io/socket.io.js'
+  io: 'http://'+window.location.host+':{port}/socket.io/socket.io.js'
 }, vogue);
 
 function vogue() {
-  WEB_SOCKET_SWF_LOCATION = 'http://localhost:{port}/socket.io/lib/vendor/web-socket-js/WebSocketMain.swf';
+  WEB_SOCKET_SWF_LOCATION = 'http://'+window.location.host+':{port}/socket.io/lib/vendor/web-socket-js/WebSocketMain.swf';
   var stylesheets = getLocalStylesheets();
   var socket = new io.Socket('localhost', { port: {port} });
   socket.on('connect', watchAllStylesheets);
@@ -34,13 +34,13 @@ function vogue() {
   }
 
   function reloadStylesheet(href) {
-    var newHref = '/' + href 
-      + (href.indexOf('?') >= 0 ? '&' : '?') 
-      + '_vogue_nocache=' 
+    var newHref = '/' + href
+      + (href.indexOf('?') >= 0 ? '&' : '?')
+      + '_vogue_nocache='
       + (new Date()).getTime();
     $(stylesheets[href]).attr('href', newHref);
   }
-  
+
   function getLocalStylesheets() {
     var links = $('link[type=text/css][href]').filter(isLocal);
     var origin = document.location.protocol + '//' + document.location.host;
@@ -92,3 +92,4 @@ function loadScript(src, loadedCallback) {
 }
 
 })();
+
