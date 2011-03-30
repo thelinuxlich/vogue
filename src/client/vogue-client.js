@@ -14,7 +14,7 @@ loadScripts({
 function vogue() {
   WEB_SOCKET_SWF_LOCATION = 'http://'+window.location.host+':{port}/socket.io/lib/vendor/web-socket-js/WebSocketMain.swf';
   var stylesheets = getLocalStylesheets();
-  var socket = new io.Socket('localhost', { port: {port} });
+  var socket = new io.Socket(window.location.host, { port: {port} });
   socket.on('connect', watchAllStylesheets);
   socket.on('message', handleMessage);
   socket.connect();
